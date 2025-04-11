@@ -1,0 +1,20 @@
+# Environment variables
+.env
+.env.aws
+# Virtual environment
+.venv
+
+# Cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+*.pywz
+
+# Logs
+logs
+*.log
+*.log.*
+*.log.*.*
