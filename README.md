@@ -2,7 +2,7 @@
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 
-ARD is a Python package for building, curating, and mining knowledge graphs to enable autonomous research discovery. It's part of the [BeeARD ecosystem](https://docs.beeard.ai/) that aims to accelerate scientific progress through AI-driven hypothesis generation and validation.
+ARD is a Python package for building, curating, and mining knowledge graphs to enable autonomous research discovery. It's part of the [BeeARD ecosystem](https://beeard.ai) that aims to accelerate scientific progress through AI-driven hypothesis generation and validation.
 
 ## 🚀 Features
 
