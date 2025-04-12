@@ -18,8 +18,8 @@ ARD requires Python 3.12+ and uses [UV](https://github.com/astral-sh/uv) as its 
 
 ```bash
 # Clone the repository
-git clone https://github.com/beeard/ard.git
-cd ard
+git clone https://github.com/beeard/hackathon.git
+cd hackathon
 
 # Initialize with UV
 uv init
@@ -48,6 +48,7 @@ kg = KnowledgeGraph()
 ARD provides two workflow implementations for hypothesis generation:
 
 1. **AutoGen-based Workflow**:
+
 ```python
 from hackathon.autogen import generate_hypothesis
 
@@ -57,6 +58,7 @@ hypothesis = generate_hypothesis.run(subgraph, output_dir="results")
 ```
 
 2. **LangGraph-based Workflow**:
+
 ```python
 from hackathon.langgraph import generate_hypothesis
 
