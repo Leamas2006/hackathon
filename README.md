@@ -18,11 +18,12 @@ ARD requires Python 3.12+ and uses [UV](https://github.com/astral-sh/uv) as its 
 
 ```bash
 # Clone the repository
-git clone https://github.com/beeard/hackathon.git
+git clone https://github.com/ARDSys/hackathon.git
 cd hackathon
 
-# Initialize with UV
-uv init
+# Create virtual env
+uv venv
+source .venv/bin/activate
 
 # Install in development mode
 uv pip install -e .
