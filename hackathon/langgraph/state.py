@@ -6,6 +6,8 @@ class HypgenState(MessagesState):
     context: str
     hypothesis: str
 
+    literature: str
+
     novelty: str
     feasibility: str
     impact: str

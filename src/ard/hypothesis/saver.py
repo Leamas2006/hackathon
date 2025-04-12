@@ -30,15 +30,15 @@ class HypothesisSaver:
 
         self.storage_backend.save_file(
             file_name,
-            f"{file_name}.{self.parser.output_type}",
+            f"hypothesis.{self.parser.output_type}",
             bytes(parsed_hypothesis, "utf-8"),
         )
 
     def get_file_name(self, hypothesis: "Hypothesis") -> str:
         file_name = sanitize_filename(hypothesis.title)
 
-        if len(file_name) > 100:
-            file_name = f"{file_name[:100]}[truncated]"
+        if len(file_name) > 50:
+            file_name = f"{file_name[:50]}[truncated]"
 
         return file_name
 
