@@ -22,7 +22,7 @@ git clone https://github.com/ARDSys/hackathon.git
 cd hackathon
 
 # Create virtual env
-uv venv
+uv sync
 source .venv/bin/activate
 
 # Install in development mode
