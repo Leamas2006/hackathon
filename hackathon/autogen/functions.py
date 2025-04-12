@@ -4,9 +4,7 @@ This module contains function definitions that are registered with agents for ex
 """
 
 import os
-import random
-from pathlib import Path
-from typing import Annotated, Union
+from typing import Annotated
 
 import requests
 
@@ -108,121 +106,6 @@ def response_to_query(
     return response_data
 
 
-def generate_path(
-    keyword_1: Annotated[
-        Union[str, None],
-        "the first node in the knowledge graph. None for random selection.",
-    ],
-    keyword_2: Annotated[
-        Union[str, None],
-        "the second node in the knowledge graph. None for random selection.",
-    ],
-) -> str:
-    """Create a knowledge path between two nodes.
-
-    The function may either take two keywords as the input or randomly assign them
-    and then returns a path between these nodes.
-
-    Args:
-        keyword_1: The first node in the knowledge graph (None for random selection)
-        keyword_2: The second node in the knowledge graph (None for random selection)
-
-    Returns:
-        A path containing several concepts (nodes) and relationships between them
-    """
-    # Import necessary modules
-    from ard.knowledge_graph.knowledge_graph import KnowledgeGraph
-    from ard.pipelines.subgraph import generate_subgraph
-
-    # Use the examples/hypegen/output directory for storing output
-    with Path("./examples/hypegen/output") as output_dir:
-        # Load the knowledge graph to find nodes if keywords are provided
-        default_graph_path = (
-            Path(__file__).parent.parent.parent.parent / "data" / "knowledge_graph.pkl"
-        )
-        alternate_graph_path = (
-            Path(__file__).parent.parent.parent.parent
-            / "data"
-            / "knowledge_graph_100.pkl"
-        )
-        small_graph_path = (
-            Path(__file__).parent.parent.parent.parent / "data" / "small_graph.pkl"
-        )
-
-        # Try loading the graph files in order of preference
-        graph_path = None
-        for path in [default_graph_path, alternate_graph_path, small_graph_path]:
-            if path.exists():
-                graph_path = path
-                break
-
-        if not graph_path:
-            return "Failed to find a knowledge graph file."
-
-        try:
-            kg = KnowledgeGraph.load_from_file(graph_path)
-        except Exception as e:
-            return f"Failed to load knowledge graph: {str(e)}"
-
-        # If keywords are provided, try to find matching nodes
-        start_node = None
-        end_node = None
-
-        if keyword_1 or keyword_2:
-            all_nodes = list(kg.get_nodes())
-
-            # Find nodes containing the keywords
-            if keyword_1:
-                matching_nodes = [
-                    node for node in all_nodes if keyword_1.lower() in node.lower()
-                ]
-                if matching_nodes:
-                    start_node = random.choice(matching_nodes)
-
-            if keyword_2:
-                matching_nodes = [
-                    node for node in all_nodes if keyword_2.lower() in node.lower()
-                ]
-                if matching_nodes:
-                    end_node = random.choice(matching_nodes)
-
-            # If we found matching nodes, use shortest_path method
-            if start_node and end_node:
-                method = "shortest_path"
-            elif start_node or end_node:
-                # If only one keyword matched, use llm_walk from that node
-                method = "llm_walk"
-            else:
-                # No keywords matched, use default method
-                method = "llm_walk"
-        else:
-            # No keywords provided, use default method
-            method = "llm_walk"
-
-        # Generate the subgraph
-        subgraph = generate_subgraph(
-            graph_path=str(graph_path),
-            embedder_path=None,  # Use default embedder or compute on the fly
-            max_nodes=10,
-            max_steps=5,
-            output_dir=output_dir,
-            method=method,
-            min_score=3,
-            neighbor_probability=0.2,
-            llm="large",
-            max_attempts=3,
-        )
-
-        if not subgraph:
-            return "Failed to generate a valid path."
-
-        # Use the to_cypher_string method to get the path representation
-        cypher_string = subgraph.to_cypher_string()
-
-        # Return the Cypher string as is
-        return cypher_string
-
-
 def rate_novelty_feasibility(
     hypothesis: Annotated[str, "the research hypothesis."],
 ) -> str:
@@ -235,7 +118,7 @@ def rate_novelty_feasibility(
         A rating of novelty and feasibility from 1 to 10
     """
     # Import here to avoid circular imports
-    from ard.hypegen.agents import novelty_admin, novelty_assistant
+    from .agents import novelty_admin, novelty_assistant
 
     res = novelty_admin.initiate_chat(
         novelty_assistant,

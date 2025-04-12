@@ -5,6 +5,7 @@ This workflow implements a hypothesis generation system using AutoGen, designed 
 ## Overview
 
 The workflow consists of several key components:
+
 - `generate_hypothesis.py`: CLI interface for running the hypothesis generation
 - `hypothesis_generator.py`: Main logic for hypothesis generation using AutoGen
 - `groupchat.py`: Manages the multi-agent conversation flow
@@ -21,6 +22,7 @@ The workflow consists of several key components:
 ## Environment Setup
 
 1. Create a `.env` file in the project root with the following variables:
+
    ```
    # OpenAI
    OPENAI_API_KEY=sk-proj-123
@@ -38,7 +40,7 @@ The workflow consists of several key components:
    LANGFUSE_SECRET_KEY=sk-lf-123
    LANGFUSE_PUBLIC_KEY=pk-lf-123
    LANGFUSE_HOST=https://cloud.langfuse.com
-   
+
    # OpenTelemetry
    OTEL_EXPORTER_OTLP_ENDPOINT=https://cloud.langfuse.com/api/public/otel
    OTEL_EXPORTER_OTLP_HEADERS=Authorization=Basic sk-lf-123
@@ -47,6 +49,7 @@ The workflow consists of several key components:
 ## Installation
 
 Install the packages in the ard's root directory:
+
 ```bash
 uv sync
 source .venv/bin/activate
@@ -58,7 +61,7 @@ The workflow can be run using the `generate_hypothesis.py` script.
 From ARD's root directory:
 
 ```bash
-python -m hackathon.autogen.generate_hypothesis -f path/to/subgraph.json --output output_directory
+python -m hackathon.autogen.generate_hypothesis -f hackathon/sample_subgraph.json --output hackathon/autogen/output
 ```
 
 ### Arguments
@@ -69,6 +72,7 @@ python -m hackathon.autogen.generate_hypothesis -f path/to/subgraph.json --outpu
 ## Output
 
 The output is a JSON file containing the hypothesis.
+
 ```json
 {
     "title": "<hypothesis.title>",
@@ -83,6 +87,7 @@ The output is a JSON file containing the hypothesis.
 ## Architecture
 
 The workflow uses AutoGen to create a multi-agent system for hypothesis generation:
+
 1. Takes a subgraph as input
 2. Initializes specialized agents with specific roles and capabilities
 3. Manages a group chat between agents to collaboratively generate hypotheses
@@ -92,6 +97,7 @@ The workflow uses AutoGen to create a multi-agent system for hypothesis generati
 ## Development
 
 To modify or extend the workflow:
+
 1. Edit `agents.py` to modify agent configurations and roles
 2. Update `prompts.py` to modify agent prompts and templates
 3. Modify `functions.py` to add new tools and capabilities

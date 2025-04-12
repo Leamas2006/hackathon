@@ -7,7 +7,6 @@ import autogen
 from autogen import AssistantAgent
 
 from .functions import (
-    generate_path,
     rate_novelty_feasibility,
     response_to_query_perplexity,
 )
@@ -162,14 +161,6 @@ novelty_assistant.register_for_llm(
     description="""This function is designed to search for academic papers using the Perplexity API based on a specified query. 
 The query should be constructed with relevant keywords separated by "+". """
 )(response_to_query_perplexity)
-
-user.register_for_execution()(generate_path)
-planner.register_for_llm()(generate_path)
-assistant.register_for_llm(
-    description="""This function can be used to create a knowledge path. The function may either take two keywords as the input or randomly assign them and then returns a path between these nodes. 
-The path contains several concepts (nodes) and the relationships between them (edges). THe function returns the path.
-Do not use this function if the path is already provided. If neither path nor the keywords are provided, select None for the keywords so that a path will be generated between randomly selected nodes."""
-)(generate_path)
 
 user.register_for_execution()(rate_novelty_feasibility)
 planner.register_for_llm()(rate_novelty_feasibility)

@@ -3,10 +3,10 @@ import re
 SUBGRAPH_FILE_EXTENSION = ".subgraph.json"
 
 
-def normalize_file_name(file_name: str) -> str:
-    """Normalize file name to ensure it's a valid S3 key."""
-    # Replace special characters with underscores
-    normalized = re.sub(r"[\\/ ]", "_", file_name)
+def sanitize_filename(file_name: str) -> str:
+    """Normalize file name by replacing all non-alphanumeric characters with underscores."""
+    # Replace all non-alphanumeric characters with underscores
+    normalized = re.sub(r"[^a-zA-Z0-9]", "_", file_name)
     return normalized
 
 

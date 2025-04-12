@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Protocol
 
 from ard.storage.file import StorageBackend
-from ard.storage.file.utils import normalize_file_name
+from ard.storage.file.utils import sanitize_filename
 
 if TYPE_CHECKING:
     from ard.hypothesis.hypothesis import Hypothesis
@@ -35,10 +35,10 @@ class HypothesisSaver:
         )
 
     def get_file_name(self, hypothesis: "Hypothesis") -> str:
-        file_name = normalize_file_name(hypothesis.title)
+        file_name = sanitize_filename(hypothesis.title)
 
         if len(file_name) > 100:
-            file_name = f"{file_name[:100]}[...truncated]"
+            file_name = f"{file_name[:100]}[truncated]"
 
         return file_name
 
@@ -73,10 +73,10 @@ class JSONParser(Parser):
             {
                 "title": hypothesis.title,
                 "text": hypothesis.statement,
-                "source": hypothesis.source.to_json(),
+                "references": hypothesis.references,
                 "metadata": hypothesis.metadata,
                 "method_name": str(hypothesis.method),
                 "method": hypothesis.method.to_json(),
-                "references": hypothesis.references,
+                "source": hypothesis.source.to_json(),
             }
         )

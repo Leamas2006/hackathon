@@ -4,7 +4,7 @@ from typing import Literal
 import dotenv
 from autogen import LLMConfig
 
-dotenv.load_dotenv()
+dotenv.load_dotenv(override=True)
 
 config = LLMConfig(
     config_list=[
