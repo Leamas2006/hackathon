@@ -18,8 +18,7 @@ from loguru import logger
 # Add the project root to the Python path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from ard.data.dataset_item import DatasetItem
-from ard.data.triplets import Triplets
+from ard.data import DatasetItem, Triplets
 
 
 def main():

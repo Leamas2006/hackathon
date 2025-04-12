@@ -5,9 +5,8 @@ from autogen import OpenAIWrapper
 from langfuse.callback import CallbackHandler
 from pydantic import BaseModel
 
-from ard.hypothesis.hypothesis import Hypothesis
-from ard.hypothesis.types import HypothesisGeneratorProtocol
-from ard.subgraph.subgraph import Subgraph
+from ard.hypothesis import Hypothesis, HypothesisGeneratorProtocol
+from ard.subgraph import Subgraph
 
 from .groupchat import create_group_chat
 from .llm_config import get_llm_config

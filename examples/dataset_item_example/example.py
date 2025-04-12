@@ -3,7 +3,7 @@ from pathlib import Path
 
 from loguru import logger
 
-from ard.data.dataset_item import DatasetItem
+from ard.data import DatasetItem
 
 
 def main():

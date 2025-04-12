@@ -5,6 +5,7 @@ This workflow implements a hypothesis generation system using LangGraph, designe
 ## Overview
 
 The workflow consists of several key components:
+
 - `generate_hypothesis.py`: CLI interface for running the hypothesis generation
 - `hypothesis_generator.py`: A wrapper around the hypothesis generation logic
 - `graph.py`: Defining the LangGraph workflow structure - the logic
@@ -18,10 +19,10 @@ The workflow consists of several key components:
 
 - [uv](https://docs.astral.sh/uv/getting-started/installation/) package and project manager
 
-
 ## Environment Setup
 
 1. Create a `.env` file in the project root with the following variables:
+
    ```
    # OpenAI
     OPENAI_API_KEY=sk-proj-123
@@ -44,6 +45,7 @@ The workflow consists of several key components:
 ## Installation
 
 Install the packages in the ard's root directory:
+
 ```bash
 uv sync
 source .venv/bin/activate
@@ -55,7 +57,7 @@ The workflow can be run using the `generate_hypothesis.py` script.
 From ARD's root directory:
 
 ```bash
-python -m hackathon.langgraph.generate_hypothesis -f path/to/subgraph.json --output output_directory
+python -m hackathon.langgraph.generate_hypothesis -f hackathon/sample_subgraph.json --output hackathon/langgraph/output
 ```
 
 ### Arguments
@@ -63,10 +65,10 @@ python -m hackathon.langgraph.generate_hypothesis -f path/to/subgraph.json --out
 - `--file` or `-f`: Path to the input JSON file containing the subgraph data
 - `--output` or `-o`: Path to the output directory (defaults to current directory)
 
-
 ## Output
 
 The output is a JSON file containing the hypothesis.
+
 ```json
 {
     "title": "<hypothesis.title>",
@@ -83,14 +85,16 @@ The output is a JSON file containing the hypothesis.
 ## Architecture
 
 The workflow uses LangGraph to create a structured process for hypothesis generation:
+
 1. Takes a subgraph as input
 2. Processes subgraph through `method` (e.g. `HypothesisGenerator`)
 3. Creates Hypothesis from the state returend by the `method`
-3. Saves the Hypothesis to the output directory
+4. Saves the Hypothesis to the output directory
 
 ## Development
 
 To modify or extend the workflow:
+
 1. Edit `graph.py` to modify the workflow structure
 2. Update `hypothesis_generator.py` with new method implementing `HypothesisGeneratorProtocol`
 3. Modify `state.py` to add new state variables if needed
@@ -98,7 +102,7 @@ To modify or extend the workflow:
 5. Modify `agents` to add new agents or modify prompt templates
 6. Extend `tools` with new functions for agents to use
 
-**Note** 
+**Note**
 `generate_hypothesis.py` should remain unchanged to enable similar structure for different workflows and easy run.
 
 ## Monitoring
