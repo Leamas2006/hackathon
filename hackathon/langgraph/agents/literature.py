@@ -1,16 +1,14 @@
-import os
 from typing import Any, Dict, Literal, Optional
 
 from langchain.prompts import PromptTemplate
 from langchain_community.tools.arxiv.tool import ArxivQueryRun
-from langchain_community.tools.pubmed.tool import PubmedQueryRun
-from langchain_community.utilities.pubmed import PubMedAPIWrapper
 from langgraph.prebuilt.chat_agent_executor import create_react_agent
 from loguru import logger
 
 from ..llm.utils import get_model
 from ..state import HypgenState
 from ..tools.perplexity import search_perplexity
+from ..tools.pubmed import pubmed_tool
 
 SEARCH_PROMPT = """
 You are a research assistant. Find relevant literature that will help evaluate novelty, feasibility, and impact of a hypothesis given below.
@@ -26,7 +24,7 @@ After searching, return the search results.
 
 tools = [
     ArxivQueryRun(),
-    PubmedQueryRun(api_wrapper=PubMedAPIWrapper(api_key=os.getenv("PUBMED_API_KEY"))),
+    pubmed_tool,
     search_perplexity,
 ]
 

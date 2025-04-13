@@ -7,6 +7,7 @@ class HypgenState(MessagesState):
     hypothesis: str
 
     literature: str
+    references: list[str]
 
     novelty: str
     feasibility: str
@@ -14,5 +15,6 @@ class HypgenState(MessagesState):
 
     critique: str
     summary: str
+    title: str
 
     iteration: int

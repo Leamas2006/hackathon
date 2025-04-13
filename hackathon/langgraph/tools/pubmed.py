@@ -1,12 +1,14 @@
+import os
 import random
 import time
 import urllib.error
 import urllib.request
 
+from langchain_community.tools.pubmed.tool import PubmedQueryRun
 from langchain_community.utilities.pubmed import PubMedAPIWrapper
 
 
-class PubMedTool(PubMedAPIWrapper):
+class PubMedAPIWrapperImproved(PubMedAPIWrapper):
     def retrieve_article(self, uid: str, webenv: str) -> dict:
         url = (
             self.base_url_efetch
@@ -41,3 +43,8 @@ class PubMedTool(PubMedAPIWrapper):
         xml_text = result.read().decode("utf-8")
         text_dict = self.parse(xml_text)
         return self._parse_article(uid, text_dict)
+
+
+pubmed_tool = PubmedQueryRun(
+    api_wrapper=PubMedAPIWrapperImproved(api_key=os.getenv("PUBMED_API_KEY"))
+)

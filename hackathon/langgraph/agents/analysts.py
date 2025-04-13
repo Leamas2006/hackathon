@@ -13,10 +13,9 @@ You are a critical AI assistant collaborating with a group of scientists to asse
 Your primary task is to evaluate a proposed research hypothesis for its {task}
 
 After careful analysis, return your estimations for the {analysis_type} as one of the following:
-- "Not {analysis_type}"
-- "Somewhat {analysis_type}"
-- "{analysis_type}"
-- "Very {analysis_type}"
+- "No {analysis_type}"
+- "Some {analysis_type}"
+- "High {analysis_type}"
 
 Provide your reasoning for your assessment.
 Cite the literature to support your assessment.
