@@ -38,7 +38,11 @@ def main(file: str, output: str):
     )
     logger.info(f"Hypothesis generated for {file_path}")
 
-    hypothesis.save(backend_path=output_path)
+    # Save hypothesis in json and md format
+    hypothesis.save(backend_path=output_path, parser_type="json")
+    hypothesis.save(backend_path=output_path, parser_type="md")
+
+    logger.info(f"Hypothesis saved to {output_path}")
 
 
 if __name__ == "__main__":
