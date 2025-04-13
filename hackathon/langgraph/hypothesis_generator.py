@@ -26,11 +26,13 @@ class HypothesisGenerator(HypothesisGeneratorProtocol):
 
         title = self.__parse_title(res, subgraph) or ""
         statement = self.__parse_statement(res)
+        references = self.__parse_references(res)
         return Hypothesis(
             title=title,
             statement=statement,
             source=subgraph,
             method=self,
+            references=references,
             metadata={
                 "summary": res["summary"],
                 "context": res["context"],
@@ -58,6 +60,9 @@ class HypothesisGenerator(HypothesisGeneratorProtocol):
         if statement_match:
             return statement_match.group(1)
         return state["hypothesis"]
+
+    def __parse_references(self, state: HypgenState) -> list[str]:
+        return state.get("references", [])
 
     def __str__(self) -> str:
         return "HypeGen Generator"

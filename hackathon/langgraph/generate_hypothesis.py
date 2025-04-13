@@ -39,6 +39,7 @@ def main(file: str, output: str):
     logger.info(f"Hypothesis generated for {file_path}")
 
     # Save hypothesis in json and md format
+    output_path.mkdir(parents=True, exist_ok=True)
     hypothesis.save(backend_path=output_path, parser_type="json")
     hypothesis.save(backend_path=output_path, parser_type="md")
 
