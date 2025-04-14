@@ -7,6 +7,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.schema import HumanMessage, SystemMessage
 from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 
 from ard.hypothesis import Hypothesis, HypothesisGeneratorProtocol
 from ard.subgraph import Subgraph
@@ -31,6 +32,12 @@ class MultiAgentHypothesisGenerator(HypothesisGeneratorProtocol):
             model=self.model_name,
             temperature=self.temperature,
             google_api_key=self.api_key
+        )
+
+        self.gpt = ChatOpenAI(
+            model = 'gpt-4',
+            temperature = '0.9',
+            openai_api_key=os.environ.get("OPENAI_API_KEY"),
         )
 
         # Initialize conversation history for logging purposes
@@ -161,7 +168,7 @@ class MultiAgentHypothesisGenerator(HypothesisGeneratorProtocol):
             """)
         ])
 
-        response = self.llm(prompt.messages)
+        response = self.gpt(prompt.messages)
         return response.content
 
     def _run_refinement_agent(self, hypothesis: str, critique: str, ontology_analysis: str, path: str) -> str:
