@@ -3,7 +3,7 @@ import os
 from typing import Any, Dict, List
 import json
 
-from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
 from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate
@@ -21,11 +21,15 @@ class MultiAgentHypothesisGenerator(HypothesisGeneratorProtocol):
         """Initialize the hypothesis generator with required agents."""
         self.model_name = os.environ.get("OPENAI_MODEL", "gpt-4")
         self.temperature = float(os.environ.get("OPENAI_TEMPERATURE", 0.7))
+        self.api_key = os.environ.get("OPENAI_API_KEY")
 
-        # Initialize the LLM
+        if not self.api_key:
+            raise ValueError("Missing OPENAI_API_KEY. Please set it in your environment variables.")
+
         self.llm = ChatOpenAI(
             model_name=self.model_name,
-            temperature=self.temperature
+            temperature=self.temperature,
+            openai_api_key=self.api_key
         )
 
         # Initialize conversation history for logging purposes
